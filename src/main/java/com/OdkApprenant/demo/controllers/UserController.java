@@ -7,8 +7,12 @@ package com.OdkApprenant.demo.controllers;
 
 import com.OdkApprenant.demo.model.Apprenant;
 import com.OdkApprenant.demo.model.Formateur;
+import com.OdkApprenant.demo.model.Presence;
 import com.OdkApprenant.demo.repositories.ApprenantRepository;
+
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -30,6 +34,8 @@ public class UserController {
     @Autowired
     ApprenantRepository apprenantRepo;
 
+    SimpleDateFormat formatter = new SimpleDateFormat("yyy/MM/dd");
+
     @Autowired
     FormateurRepository formateurRepository;
     
@@ -38,6 +44,8 @@ public class UserController {
 
     @Autowired
     ApprenantServices apprenantServices;
+
+    Date date_today;
 
 
     @GetMapping("")
@@ -133,4 +141,22 @@ public class UserController {
 
         }
     }
+
+
+
+
+    @GetMapping("/presence")
+    public ResponseEntity<List<Presence>> getAllPresence(){
+        List<Presence> presenceList = serviceImp.getAllPresence();
+        return new ResponseEntity<>(presenceList, HttpStatus.OK);
+    }
+
+    @PostMapping("add/presence")
+    public ResponseEntity<Presence> addFormateur(@RequestBody Presence presence){
+        Presence presence1 = serviceImp.add_to_liste(presence);
+        return new ResponseEntity<>(presence1, HttpStatus.CREATED);
+    }
+
+
+
 }
