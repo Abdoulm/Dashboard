@@ -11,7 +11,8 @@ public class Admin implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private String admin_id;
+    private Long admin_id;
+
     private String admin_nom;
     private String admin_prenom;
     private String admin_login;
@@ -49,14 +50,7 @@ public class Admin implements Serializable {
         return admin_password;
     }
 
-    public void setAdmin_password(String admin_password) {
-        this.admin_password = admin_password;
-    }
-    public String getAdmin_id() {
-        return admin_id;
-    }
-
-    public void setAdmin_id(String admin_id) {
+    public void setAdmin_id(Long admin_id) {
         this.admin_id = admin_id;
     }
 

@@ -8,14 +8,11 @@ package com.OdkApprenant.demo.services;
 import com.OdkApprenant.demo.model.Apprenant;
 import java.util.List;
 
-/**
- *
- * @author Hady Fofana
- */
+
 public interface ApprenantService {
     Apprenant saveApprenant(Apprenant a);
-    
-    
+
+
     Apprenant updateApprenant(Apprenant a);
     
     
