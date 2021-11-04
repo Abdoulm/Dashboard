@@ -6,34 +6,35 @@
 package com.OdkApprenant.demo.controllers;
 
 import com.OdkApprenant.demo.model.Apprenant;
+import com.OdkApprenant.demo.model.Formateur;
 import com.OdkApprenant.demo.repositories.ApprenantRepository;
-import com.OdkApprenant.demo.services.ApprenantServiceImp;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+import com.OdkApprenant.demo.repositories.FormateurRepository;
 import com.OdkApprenant.demo.services.ApprenantServices;
+import com.OdkApprenant.demo.services.ServiceImp;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import javax.validation.Valid;
 
-/**
- *
- * @author hady.fofana
- */
+
 @RestController
 @RequestMapping("/api")
-public class ApprenantController {
+public class UserController {
     
     @Autowired
     ApprenantRepository apprenantRepo;
+
+    @Autowired
+    FormateurRepository formateurRepository;
     
     @Autowired
-    ApprenantServiceImp apprenantServiceImp;
+    ServiceImp serviceImp;
 
     @Autowired
     ApprenantServices apprenantServices;
@@ -49,7 +50,7 @@ public class ApprenantController {
     @GetMapping("/all")
     public List<Apprenant> getAllApprenant(){
     List<Apprenant> apprenantList = new ArrayList<Apprenant>();
-    Iterable<Apprenant> iterable = apprenantServiceImp.getAllApprenants();
+    Iterable<Apprenant> iterable = serviceImp.getAllApprenants();
     iterable.forEach(apprenantList::add);
     
     return apprenantList;
@@ -58,12 +59,12 @@ public class ApprenantController {
 
     @PostMapping("/add")
     public Apprenant ajouterApprenant(@RequestBody Apprenant apprenant){
-        return apprenantServiceImp.saveApprenant(apprenant);
+        return serviceImp.saveApprenant(apprenant);
     }
     
     @DeleteMapping("/delete/{id}")
     public void suprimerApprenant(@PathVariable Long id){
-         apprenantServiceImp.deleteApprenantById(id);
+        serviceImp.deleteApprenantById(id);
     }
 
      @GetMapping("/apprenant/{id}")
@@ -101,4 +102,35 @@ public class ApprenantController {
         }
     }
 
+
+    @GetMapping("all/formateur")
+    public ResponseEntity<List<Formateur>> getAllFormateur(){
+        List<Formateur> formateurList = serviceImp.getAllFormateur();
+        return new ResponseEntity<>(formateurList, HttpStatus.OK);
+    }
+
+    @PostMapping("add/formateur")
+    public ResponseEntity<Formateur> addFormateur(@RequestBody Formateur formateur){
+        Formateur formateur1 = serviceImp.saveFormateur(formateur);
+        return new ResponseEntity<>(formateur1, HttpStatus.CREATED);
+    }
+
+    @PutMapping("update/formateur/{id}")
+    public ResponseEntity<Formateur> updateFomateur(@PathVariable(value = "id") Long id,
+                                                       @RequestBody Formateur modifier_formateur){
+        Optional<Formateur> formateur = formateurRepository.findById(id);
+        if (formateur.isPresent()){
+            Formateur formateur1 = formateur.get();
+            formateur1.setForm_nom(modifier_formateur.getForm_nom());
+            formateur1.setForm_prenom(modifier_formateur.getForm_prenom());
+            formateur1.setForm_email(modifier_formateur.getForm_email());
+
+            formateur1 = formateurRepository.save(formateur1);
+
+            return ResponseEntity.ok().body(formateur1);
+        }else {
+            return ResponseEntity.notFound().build();
+
+        }
+    }
 }
