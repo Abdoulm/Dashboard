@@ -55,7 +55,7 @@ public class UserController {
     }
 
 
-    @GetMapping("/all")
+    @GetMapping("/apprenant/all")
     public List<Apprenant> getAllApprenant(){
     List<Apprenant> apprenantList = new ArrayList<Apprenant>();
     Iterable<Apprenant> iterable = serviceImp.getAllApprenants();
@@ -65,7 +65,7 @@ public class UserController {
     }
     
 
-    @PostMapping("/add")
+    @PostMapping("/apprenant/add")
     public Apprenant ajouterApprenant(@RequestBody Apprenant apprenant){
         return serviceImp.saveApprenant(apprenant);
     }
