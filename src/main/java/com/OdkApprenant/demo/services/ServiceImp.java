@@ -7,25 +7,32 @@ package com.OdkApprenant.demo.services;
 
 import com.OdkApprenant.demo.model.Apprenant;
 import com.OdkApprenant.demo.model.Formateur;
+import com.OdkApprenant.demo.model.Presence;
 import com.OdkApprenant.demo.repositories.ApprenantRepository;
+
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
+import java.util.Optional;
 
 import com.OdkApprenant.demo.repositories.FormateurRepository;
+import com.OdkApprenant.demo.repositories.PresenceRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-/**
- *
- * @author Hady Fofana
- */
+
 @Service
-public class  ServiceImp implements ApprenantService,  FormateurService{
+public class  ServiceImp implements ApprenantService,  FormateurService, PresenceService{
     
     @Autowired
     ApprenantRepository apprenantRepository;
 
     @Autowired
     FormateurRepository formateurRepository;
+
+    @Autowired
+    PresenceRepository presenceRepository;
 
 
 
@@ -88,5 +95,23 @@ public class  ServiceImp implements ApprenantService,  FormateurService{
     @Override
     public List<Formateur> getAllFormateur() {
         return formateurRepository.findAll();
+    }
+
+
+    @Override
+    public Presence add_to_liste(Presence apprenant) {
+        return presenceRepository.save(apprenant);
+    }
+
+    @Override
+    public void supp_of_liste(Presence apprenant) {
+        presenceRepository.delete(apprenant);
+
+    }
+
+
+    @Override
+    public List<Presence> getAllPresence() {
+        return presenceRepository.findAll();
     }
 }

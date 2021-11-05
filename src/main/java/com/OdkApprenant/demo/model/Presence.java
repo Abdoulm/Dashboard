@@ -2,6 +2,7 @@ package com.OdkApprenant.demo.model;
 
 import javax.persistence.*;
 import java.util.Date;
+import java.util.Locale;
 
 @Entity
 public class Presence {
@@ -10,8 +11,8 @@ public class Presence {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long presence_id;
 
-    @Temporal(TemporalType.DATE)
-    Date Date_of_day;
+
+    Locale Date_of_day;
 
     @Temporal(TemporalType.TIME)
     Date heure_arriver;
@@ -34,11 +35,12 @@ public class Presence {
         this.presence_id = presence_id;
     }
 
-    public Date getDate_of_day() {
+
+    public Locale getDate_of_day() {
         return Date_of_day;
     }
 
-    public void setDate_of_day(Date date_of_day) {
+    public void setDate_of_day(Locale date_of_day) {
         Date_of_day = date_of_day;
     }
 
