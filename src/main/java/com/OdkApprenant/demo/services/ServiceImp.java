@@ -11,6 +11,8 @@ import com.OdkApprenant.demo.model.Presence;
 import com.OdkApprenant.demo.repositories.ApprenantRepository;
 
 import java.text.SimpleDateFormat;
+import java.time.DayOfWeek;
+import java.time.LocalDate;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
@@ -18,8 +20,11 @@ import java.util.Optional;
 
 import com.OdkApprenant.demo.repositories.FormateurRepository;
 import com.OdkApprenant.demo.repositories.PresenceRepository;
+import org.apache.tomcat.jni.Local;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import static java.time.temporal.TemporalAdjusters.previousOrSame;
+import static java.time.temporal.TemporalAdjusters.nextOrSame;
 
 
 @Service
@@ -33,6 +38,9 @@ public class  ServiceImp implements ApprenantService,  FormateurService, Presenc
 
     @Autowired
     PresenceRepository presenceRepository;
+
+    @Autowired
+    PresenceService presenceService;
 
 
 
@@ -106,6 +114,20 @@ public class  ServiceImp implements ApprenantService,  FormateurService, Presenc
     @Override
     public void supp_of_liste(Presence apprenant) {
         presenceRepository.delete(apprenant);
+
+    }
+
+    @Override
+    public List<Presence> getPresenceList(LocalDate localdate) {
+        return presenceRepository.getPresenceByDate(localdate);
+    }
+
+    @Override
+    public List<Presence> getPresenceListByDate(int year, int month, int day) {
+        LocalDate week = LocalDate.of(year, month, day);
+        LocalDate monday = week.with(previousOrSame(DayOfWeek.MONDAY));
+        LocalDate friday = week.with(nextOrSame(DayOfWeek.FRIDAY));
+        return presenceRepository.getPresenceByDateGreaterThanEqualAndDateLessThanEqual(monday, friday);
 
     }
 
