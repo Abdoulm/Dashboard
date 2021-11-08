@@ -5,6 +5,7 @@ import com.OdkApprenant.demo.model.Formateur;
 import com.OdkApprenant.demo.model.Presence;
 
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
@@ -17,7 +18,10 @@ public interface PresenceService  {
 
     void supp_of_liste(Presence apprenant);
 
-    //List<Presence>  getTodayPresenceListe(String calendar);
+    List<Presence>  getPresenceList(LocalDate localdate);
+    List<Presence>  getPresenceListByDate(int year, int month, int day);
+    //List<Presence>  getPresenceListeByMonyh(int year, int month);
+    //List<Presence>  getPresenceListeBetwen(LocalDate min, LocalDate max);
 
 
     List<Presence> getAllPresence();

@@ -11,15 +11,18 @@ import com.OdkApprenant.demo.model.Presence;
 import com.OdkApprenant.demo.repositories.ApprenantRepository;
 
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
 import com.OdkApprenant.demo.repositories.FormateurRepository;
+import com.OdkApprenant.demo.repositories.PresenceRepository;
 import com.OdkApprenant.demo.services.ApprenantServices;
 import com.OdkApprenant.demo.services.ServiceImp;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
 
 import org.springframework.http.ResponseEntity;
@@ -38,6 +41,9 @@ public class UserController {
 
     @Autowired
     FormateurRepository formateurRepository;
+
+    @Autowired
+    PresenceRepository presenceRepository;
     
     @Autowired
     ServiceImp serviceImp;
@@ -55,7 +61,7 @@ public class UserController {
     }
 
 
-    @GetMapping("/all")
+    @GetMapping("/apprenant/all")
     public List<Apprenant> getAllApprenant(){
     List<Apprenant> apprenantList = new ArrayList<Apprenant>();
     Iterable<Apprenant> iterable = serviceImp.getAllApprenants();
@@ -65,12 +71,12 @@ public class UserController {
     }
     
 
-    @PostMapping("/add")
+    @PostMapping("/apprenant/add")
     public Apprenant ajouterApprenant(@RequestBody Apprenant apprenant){
         return serviceImp.saveApprenant(apprenant);
     }
     
-    @DeleteMapping("/delete/{id}")
+    @DeleteMapping("/apprenant/delete/{id}")
     public void suprimerApprenant(@PathVariable Long id){
         serviceImp.deleteApprenantById(id);
     }
@@ -95,12 +101,6 @@ public class UserController {
             apprenant1.setAge(modifier_apprenant.getAge());
             apprenant1.setTel(modifier_apprenant.getTel());
             apprenant1.setEmail(modifier_apprenant.getEmail());
-            apprenant1.setLogin(modifier_apprenant.getLogin());
-            apprenant1.setPassword(modifier_apprenant.getPassword());
-            apprenant1.setGenre(modifier_apprenant.getGenre());
-            apprenant1.setApprenantStatus(modifier_apprenant.getApprenantStatus());
-            apprenant1.setDateModification(modifier_apprenant.getDateModification());
-            
             apprenant1 = apprenantRepo.save(apprenant1);
             
             return ResponseEntity.ok().body(apprenant1);
@@ -155,6 +155,20 @@ public class UserController {
     public ResponseEntity<Presence> addFormateur(@RequestBody Presence presence){
         Presence presence1 = serviceImp.add_to_liste(presence);
         return new ResponseEntity<>(presence1, HttpStatus.CREATED);
+    }
+
+    //Avoir La liste de presence Par La Date du jour LocalTimeDate
+    @GetMapping("/presence/today")
+    public List<Presence> getTodayPresenceListe(){
+        return serviceImp.getPresenceList(LocalDate.now());
+    }
+
+    @GetMapping("/presence/semaine/{year}-{month}-{day}")
+    public List<Presence> getPresenceListBetwen(
+            @PathVariable("year") int year,
+            @PathVariable("month") int month,
+            @PathVariable("day") int day){
+        return presenceRepository.getPresenceByDateGreaterThanEqualAndDateLessThanEqual(year, month, day);
     }
 
 

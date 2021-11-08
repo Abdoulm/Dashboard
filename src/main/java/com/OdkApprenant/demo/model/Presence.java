@@ -1,8 +1,10 @@
 package com.OdkApprenant.demo.model;
 
 import javax.persistence.*;
+import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.Date;
-import java.util.Locale;
+
 
 @Entity
 public class Presence {
@@ -12,13 +14,13 @@ public class Presence {
     private Long presence_id;
 
 
-    Locale Date_of_day;
+    LocalDate date;
 
-    @Temporal(TemporalType.TIME)
-    Date heure_arriver;
 
-    @Temporal(TemporalType.TIME)
-    Date heure_depart;
+    LocalTime heure_arriver;
+
+
+    LocalTime heure_depart;
 
     @ManyToOne
     private Apprenant appr;
@@ -36,27 +38,27 @@ public class Presence {
     }
 
 
-    public Locale getDate_of_day() {
-        return Date_of_day;
+    public LocalDate getDate() {
+        return date;
     }
 
-    public void setDate_of_day(Locale date_of_day) {
-        Date_of_day = date_of_day;
+    public void setDate(LocalDate date) {
+        this.date = date;
     }
 
-    public Date getHeure_arriver() {
+    public LocalTime getHeure_arriver() {
         return heure_arriver;
     }
 
-    public void setHeure_arriver(Date heure_arriver) {
+    public void setHeure_arriver(LocalTime heure_arriver) {
         this.heure_arriver = heure_arriver;
     }
 
-    public Date getHeure_depart() {
+    public LocalTime getHeure_depart() {
         return heure_depart;
     }
 
-    public void setHeure_depart(Date heure_depart) {
+    public void setHeure_depart(LocalTime heure_depart) {
         this.heure_depart = heure_depart;
     }
 

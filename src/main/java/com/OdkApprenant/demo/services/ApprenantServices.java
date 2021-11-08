@@ -17,9 +17,6 @@ public class ApprenantServices {
     public Apprenant lookUp(String login){
         return this.mp.get(login);
     }
-    public void save(Apprenant apprenant){
-        this.mp.put(apprenant.getLogin(), apprenant );
-    }
 
     public boolean loginExist(String login){
         return this.mp.containsKey(login);

@@ -19,17 +19,10 @@ public class Apprenant implements Serializable {
     private Long idApprenant;
     private String nom;
     private String prenom;
-    private String heure_arrive_apprenant;
-    private String heure_depart_apprenant;
     private String age;
     private String tel;
     private String email;
-    private String login;
-    private String password;
     private String genre;
-    private  ApprenantStatus apprenantStatus;
-    @Temporal(javax.persistence.TemporalType.DATE)
-    private Date dateCreation;
     @Temporal(javax.persistence.TemporalType.DATE)
     private Date dateModification;
 
@@ -44,11 +37,7 @@ public class Apprenant implements Serializable {
         this.age = age;
         this.tel = tel;
         this.email = email;
-        this.login = login;
-        this.password = password;
         this.genre = genre;
-        this.apprenantStatus = apprenantStatus;
-        this.dateCreation = dateCreation;
         this.dateModification = dateModification;
     }
     
@@ -104,21 +93,6 @@ public class Apprenant implements Serializable {
         this.email = email;
     }
 
-    public String getLogin() {
-        return login;
-    }
-
-    public void setLogin(String login) {
-        this.login = login;
-    }
-
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
-    }
 
     public String getGenre() {
         return genre;
@@ -128,21 +102,6 @@ public class Apprenant implements Serializable {
         this.genre = genre;
     }
 
-    public ApprenantStatus getApprenantStatus() {
-        return apprenantStatus;
-    }
-
-    public void setApprenantStatus(ApprenantStatus apprenantStatus) {
-        this.apprenantStatus = apprenantStatus;
-    }
-
-    public Date getDateCreation() {
-        return dateCreation;
-    }
-
-    public void setDateCreation(Date dateCreation) {
-        this.dateCreation = dateCreation;
-    }
 
     public Date getDateModification() {
         return dateModification;
@@ -152,28 +111,17 @@ public class Apprenant implements Serializable {
         this.dateModification = dateModification;
     }
 
-    public String getHeure_arrive_apprenant() {
-        return heure_arrive_apprenant;
-    }
-
-    public void setHeure_arrive_apprenant(String heure_arrive_apprenant) {
-        this.heure_arrive_apprenant = heure_arrive_apprenant;
-    }
-
-    public String getHeure_depart_apprenant() {
-        return heure_depart_apprenant;
-    }
-
-    public void setHeure_depart_apprenant(String heure_depart_apprenant) {
-        this.heure_depart_apprenant = heure_depart_apprenant;
-    }
-
-
     @Override
     public String toString() {
-        return "Apprenant{" + "idApprenant=" + idApprenant + ", nom=" + nom + ", prenom=" + prenom + ", age=" + age + ", tel=" + tel + ", email=" + email + ", login=" + login + ", password=" + password + ", genre=" + genre + ", apprenantStatus=" + apprenantStatus + ", dateCreation=" + dateCreation + ", dateModification=" + dateModification + '}';
+        return "Apprenant{" +
+                "idApprenant=" + idApprenant +
+                ", nom='" + nom + '\'' +
+                ", prenom='" + prenom + '\'' +
+                ", age='" + age + '\'' +
+                ", tel='" + tel + '\'' +
+                ", email='" + email + '\'' +
+                ", genre='" + genre + '\'' +
+                ", dateModification=" + dateModification +
+                '}';
     }
-    
-    
-    
 }
